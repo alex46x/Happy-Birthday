@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Hind+Siliguri:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* কাস্টম স্টাইল */
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #111827;
+            /* গাঢ় নীল-ধূসর ব্যাকগ্রাউন্ড */
+            color: #F3F4F6;
+        }
+
+        /* নতুন গ্রেডিয়েন্ট টেক্সট থিম */
+        .gradient-text {
+            background: linear-gradient(45deg, #8B5CF6, #EC4899, #fbff00);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            animation: gradient-animation 6s ease infinite;
+            transition: filter 0.4s ease-in-out;
+        }
+
+        /* XYZ এর জন্য আলাদা রঙ */
+        .xyz-text-color {
+            color: #FBBF24;
+            /* উজ্জ্বল সোনালী রঙ */
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.7);
+            transition: filter 0.4s ease-in-out;
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* হিরো টেক্সটের জন্য ফ্লোটিং অ্যানিমেশন */
+        .float-animation {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-25px) translateX(10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* হোভার অ্যানিমেশন */
+        .title-container:hover .gradient-text,
+        .title-container:hover .xyz-text-color {
+            filter: brightness(1.3);
+        }
+
+        /* টাইপিং কার্সার এর জন্য অ্যানিমেশন */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: #49ff02;
+            /* থিমের সাথে মিলিয়ে রঙ */
+            animation: blink 0.7s infinite;
+            margin-left: 4px;
+            vertical-align: bottom;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* কার্ডের হোভার অ্যানিমেশন */
+        .card-container {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .card-container:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 0 30px rgb(90, 1, 255), 0 0 50px rgb(138, 49, 255);
+        }
+
+        /* বিশেষ বার্তার হোভার অ্যানিমেশন */
+        .special-message-box {
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .special-message-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgb(221, 0, 255);
+        }
+
+        /* উন্নত স্ক্রল অ্যানিমেশন */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* কনফেটি ক্যানভাস */
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 15;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900">
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Dark Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="PXL_20240305_174352029.PORTRAIT.png" alt="উৎসবের ব্যাকগ্রাউন্ড" class="w-full h-full object-cover"
+                onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/111827/EC4899?text=Background+Image';">
+            <div class="absolute inset-0 bg-black opacity-75"></div>
+        </div>
+
+        <!-- Confetti Canvas -->
+        <canvas id="confetti-canvas"></canvas>
+
+        <!-- Content -->
+        <div
+            class="relative z-20 container mx-auto px-6 flex flex-col md:grid md:grid-cols-2 gap-8 items-center text-center md:text-left">
+            <!-- Happy Birthday Title (Top on Mobile, Right on Desktop) -->
+            <div class="md:order-2 float-animation md:text-right title-container">
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight">
+                    <span class="gradient-text">Happy<br>Birthday</span><br>
+                    <span class="xyz-text-color">MONISHA</span>
+                </h1>
+            </div>
+
+            <!-- Typing Message (Bottom on Mobile, Left on Desktop) -->
+            <div class="md:order-1">
+                <div id="typing-container"
+                    class="text-lg md:text-2xl text-fuchsia-400 font-semibold min-h-[100px] md:min-h-[150px]">
+                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Image Cards Section -->
+    <main class="py-16 md:py-24 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-violet-400 scroll-reveal">~ Some Memory ~</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+                <!-- Card 1 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    tabindex="0">
+                    <img src="Pasted image.png" alt="Memory 1"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/8B5CF6/FFFFFF?text=Image+1';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            তোর হাসিটা ঠিক এমনই অমলিন থাকুক সারাজীবন।</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 200ms;" tabindex="0">
+                    <img src="Pasted image (2).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/EC4899/FFFFFF?text=Image+2';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            তোর সাথে কাটানো প্রতিটি মুহূর্ত আমার জন্য বিশেষ।</p>
+                    </div>
+                </div>
+
+
+                <!-- Card 3 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (3).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            তোর সাথে কাটানো আমার সেরা একটা দিন ………! <br>
+                            আগামী দিনগুলো আরও সুন্দর ও সাফল্যমণ্ডিত হোক।</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!-- Card 4 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (4).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            One of the best photo !<br>সত্যি বলতে এই ছবিটা অনেক সুন্দর ।
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <!-- Card 5 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (5).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            হাসিনা এবং খালেদা (⁠•⁠‿⁠•⁠)</p>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Card 6 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (6).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            উফস্ $@*# ভা*ঙ্গা হাসি ≈ ক্লোজআপ না কি কোলগেট ?</p>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Card 7 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (7).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            পিছনে ফিরে দেখো তুমি ~ অপ্রত্যাশিত কোনো অতিথি !</p>
+                    </div>
+                </div>
+
+
+                <!-- Card 8 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (8).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                             এভাবে হাসবি  না ~ নেশা হয়ে যাবে >> বাবা নেশা করতে মানা করেছে ! </p>
+                    </div>
+                </div>
+
+
+                <!-- Card 9 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (9).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            উফস্ ! মায়াবি  (⁠ ⁠◜⁠‿⁠◝⁠ ⁠)⁠♡</p>
+                    </div>
+                </div>
+
+
+                <!-- Card 10 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (10).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            এভাবে তাকাবি না ≈ ভয় লাগে !</p>
+                    </div>
+                </div>
+
+
+                <!-- Card 11 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (11).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            হাট্টিমাটিম টিম , তোর মাথায় দুটো শিং !</p>
+                    </div>
+                </div>
+
+
+                <!-- Card 12 -->
+                <div class="card-container group relative rounded-xl overflow-hidden shadow-lg cursor-pointer scroll-reveal"
+                    style="transition-delay: 400ms;" tabindex="0">
+                    <img src="Pasted image (12).png" alt="MEMORY"
+                        class="card-image w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x400/D946EF/FFFFFF?text=Image+3';">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <p
+                            class="text-white text-xl font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            দেখ পিছনের ভ্যা*ব*না ছেলেগুলো কিভাবে তাকিয়ে আছে !</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Special Message Section -->
+    <section class="py-16 md:py-24 bg-gray-900">
+        <div class="container mx-auto px-6 max-w-3xl text-center">
+            <div class="special-message-box scroll-reveal bg-gray-800/20 border border-fuchsia-500/20 rounded-xl p-8 md:p-12 shadow-xl"
+                style="transition-delay: 200ms;">
+                <h3 class="text-3xl font-bold text-fuchsia-400 mb-4">SOMTHING FOR YOU</h3>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    জীবনের পথে চলতে চলতে অনেক মানুষের সাথে দেখা হয়, কিন্তু তোর মতো বন্ধু পাওয়া ভাগ্যের ব্যাপার। তোর
+                    সততা, তোর হাসি, আর তোর সঙ্গ আমার কাছে অমূল্য। আজকের এই দিনে শুধু এটুকুই চাই,তুই যেনো সবসময় এমনটাই থাকিস ।
+                    থাকো, আর তোর জীবনের সব স্বপ্ন যেন সত্যি হয়। অনেক ভালোবাসি তোকে।
+                    <br> <br>
+
+কিছু ড্যা*ব*ন@ ছেলে এমনি imoশনাল কথা বলে মেয়ে পটানোর চেষ্টা করে । ঠিক ১২ বাজলেই জন্মদিনর উইস্ করবে মনে হবে হি*সু আটকে রেখেছিলো এত সময় ~ তারপর ব@র@ একথা ওকথা বলে বছরের পর বছর কাটিয়ে দেবে কি করো ? কি খাও ? আমার বাবুটা কি করে ? এই ব@ল ছ@ল বলে । পরে পরীক্ষার সময় ম@রা খেতে হয় ।খবরদার এইধরনের ফাঁদে কখনো পা দিবি না 😾 
+জন্মদিনে $@*# ভ@*ঙ্গা  শুভেচ্ছা 😑 
+এই নে গিফট = 🎁 🎁 🎁 🎁
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-8 bg-gray-900 border-t border-gray-800">
+        <p class="text-gray-500 scroll-reveal" style="transition-delay: 100ms;"> &#169 ~MRX~ Made with ❤️ for a very
+            special person ❤️.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Typing Animation ---
+            const typingTextElement = document.getElementById('typing-text');
+            const messages = [
+                "Hey Happy Birthday",
+                "M O N I S H A",
+
+                "Happy Birthday, may joy always find you ❤️",
+                "Another year, another wish for your happiness 🎂",
+                "May your smile shine brighter this year ✨",
+                "Wishing you peace, love, and laughter today 🌸",
+                "Time passes, but my good wishes remain 🎁",
+                "Hope your heart feels light today 🎉",
+                "May your dreams take flight this year 💫",
+                "আজকের এই বিশেষ দিনে,",
+                "তোর জন্য রইল অনেক অনেক শুভেচ্ছা ও ভালোবাসা।",
+                "জীবনের প্রতিটি পদক্ষেপে তুই সফল হ,",
+                "এই কামনাই করি।",
+                "শুভ জন্মদিন!"
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentMessage = messages[messageIndex];
+                if (isDeleting) {
+                    typingTextElement.textContent = currentMessage.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingTextElement.textContent = currentMessage.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                let typeSpeed = isDeleting ? 70 : 130;
+                if (!isDeleting && charIndex === currentMessage.length) {
+                    typeSpeed = 2800;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    messageIndex = (messageIndex + 1) % messages.length;
+                    typeSpeed = 500;
+                }
+                setTimeout(type, typeSpeed);
+            }
+            type();
+
+            // --- Scroll Reveal Animation ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 }); // Trigger animation a bit earlier
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Confetti Animation ---
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            const colors = ['#8B5CF6', '#EC4899', '#D946EF', '#FBBF24', '#ffffff'];
+
+            function Particle(x, y) {
+                this.x = x; this.y = y; this.size = Math.random() * 7 + 3;
+                this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 5 - 2.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = 1; this.rotation = Math.random() * 360;
+            }
+            Particle.prototype.update = function () {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.speedX;
+                this.opacity -= 0.01;
+                if (this.size > 0.2) this.size -= 0.05;
+            };
+            Particle.prototype.draw = function () {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            };
+            function createParticles() {
+                const particleCount = 100;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle(Math.random() * canvas.width, -20));
+                }
+            }
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].opacity <= 0 || particles[i].y > canvas.height) {
+                        particles.splice(i, 1);
+                        i--;
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+
+            // Start confetti rain
+            setInterval(createParticles, 1000);
+            animateParticles();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
+    </script>
+
+</body>
+
+</html>
